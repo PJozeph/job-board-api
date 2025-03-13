@@ -24,7 +24,7 @@ namespace JobBoard.Repository {
         }
 
         public JobPost GetJobPost(int postId) {
-          return  _dataContext.JobPosts.FirstOrDefault(post => post.PostId == postId);
+            return _dataContext.JobPosts.FirstOrDefault(post => post.PostId == postId)!;
         }
 
         public IEnumerable<JobPost> GetJobPosts() {

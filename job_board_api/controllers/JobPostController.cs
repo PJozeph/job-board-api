@@ -1,4 +1,3 @@
-using JobBoard.Data;
 using JobBoard.Dtos;
 using JobBoard.Models;
 using JobBoard.Repository;
@@ -10,19 +9,18 @@ namespace JobBoard.contollers {
     [Route("[controller]")]
     public class JobPostController : ControllerBase {
 
-
         public readonly IJobPostRepository jobPostRepository;
 
         public JobPostController(IJobPostRepository jobPostRepository) {
             this.jobPostRepository = jobPostRepository;
         }
 
-        [HttpGet("GetJobPosts")]
+        [HttpGet("GetAll")]
         public IEnumerable<JobPost> Get() {
             return jobPostRepository.GetJobPosts();
         }
 
-        [HttpGet("GetSingleJobPosts/{id}")]
+        [HttpGet("GetSingle/{id}")]
         public IActionResult GetSingleJobPost(int id) {
            JobPost jobPost = jobPostRepository.GetJobPost(id);
               if (jobPost == null) {
@@ -31,17 +29,17 @@ namespace JobBoard.contollers {
             return Ok(jobPost);
         }
 
-        [HttpPost("AddJobPost")]
+        [HttpPost("Add")]
         public IActionResult Save(AddJobPostDTO addJobPostDTO) {
             return Ok();
         }
 
-        [HttpPut("UpdateJobPost")]
+        [HttpPut("Update")]
         public IActionResult Update(EditJobPostDTO editJobPostDTO) {
             return Ok();
         }
 
-        [HttpDelete("DeleteJobPost")]
+        [HttpDelete("Delete/{id}")]
         public IActionResult Delete(int id) {
             return Ok();
         }
