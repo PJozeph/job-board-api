@@ -11,8 +11,9 @@ namespace JobBoard.Repository {
             _dataContext = new DataContextEntityFramework(config);
         }
 
-        public void AddJobPost(JobPost jobPost) {
-            throw new NotImplementedException();
+        public int AddJobPost(JobPost jobPost) {
+            _dataContext.JobPosts.Add(jobPost);
+            return _dataContext.SaveChanges();
         }
 
         public void DeleteJobPost(int postId) {
@@ -30,5 +31,6 @@ namespace JobBoard.Repository {
         public IEnumerable<JobPost> GetJobPosts() {
             return _dataContext.JobPosts.ToList<JobPost>();
         }
+
     }
 }

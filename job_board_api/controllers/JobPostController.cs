@@ -31,6 +31,16 @@ namespace JobBoard.contollers {
 
         [HttpPost("Add")]
         public IActionResult Save(AddJobPostDTO addJobPostDTO) {
+
+            JobPost post = new JobPost();
+            post.UserId = addJobPostDTO.UserId;
+            post.Title = addJobPostDTO.Title;
+            post.Description = addJobPostDTO.Description;
+
+            int result = jobPostRepository.AddJobPost(post);
+            if (result == 0) {
+                return BadRequest("The job post was not added");
+            }
             return Ok();
         }
 
