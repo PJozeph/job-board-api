@@ -1,4 +1,5 @@
 using JobBoard.Data;
+using JobBoard.Dtos;
 using JobBoard.Models;
 using JobBoard.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -31,12 +32,12 @@ namespace JobBoard.contollers {
         }
 
         [HttpPost("AddJobPost")]
-        public IActionResult Save() {
+        public IActionResult Save(AddJobPostDTO addJobPostDTO) {
             return Ok();
         }
 
         [HttpPut("UpdateJobPost")]
-        public IActionResult Update() {
+        public IActionResult Update(EditJobPostDTO editJobPostDTO) {
             return Ok();
         }
 
