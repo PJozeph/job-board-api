@@ -1,5 +1,6 @@
 using JobBoard.Data;
 using JobBoard.Models;
+using JobBoard.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JobBoard.contollers {
@@ -8,18 +9,32 @@ namespace JobBoard.contollers {
     [Route("[controller]")]
     public class JobPostController : ControllerBase {
 
-        private readonly DataContextEntityFramework _dataContext;
-        private readonly IConfiguration _config;
 
-        public JobPostController(IConfiguration config) {
-            _config = config;
-            _dataContext = new DataContextEntityFramework(_config);
+        public readonly IJobPostRepository jobPostRepository;
+
+        public JobPostController(IJobPostRepository jobPostRepository) {
+            this.jobPostRepository = jobPostRepository;
         }
 
-        [HttpGet]
+        [HttpGet("GetJobPosts")]
         public IEnumerable<JobPost> Get() {
-            Console.WriteLine("Get", _dataContext);
-            return _dataContext.JobPosts;
+            return jobPostRepository.GetJobPosts();
+        }
+
+
+        [HttpPost("AddJobPost")]
+        public IActionResult Save() {
+            return Ok();
+        }
+
+        [HttpPut("UpdateJobPost")]
+        public IActionResult Update() {
+            return Ok();
+        }
+
+        [HttpDelete("DeleteJobPost")]
+        public IActionResult Delete(int id) {
+            return Ok();
         }
 
     }

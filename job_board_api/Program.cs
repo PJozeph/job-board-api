@@ -1,4 +1,5 @@
 using JobBoard.Data;
+using JobBoard.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,9 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IJobPostRepository, JobBoardRepository>();
+
 
 
 var app = builder.Build();
