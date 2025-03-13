@@ -21,6 +21,14 @@ namespace JobBoard.contollers {
             return jobPostRepository.GetJobPosts();
         }
 
+        [HttpGet("GetSingleJobPosts/{id}")]
+        public IActionResult GetSingleJobPost(int id) {
+           JobPost jobPost = jobPostRepository.GetJobPost(id);
+              if (jobPost == null) {
+                return NotFound("The job post was not found");
+              }
+            return Ok(jobPost);
+        }
 
         [HttpPost("AddJobPost")]
         public IActionResult Save() {
