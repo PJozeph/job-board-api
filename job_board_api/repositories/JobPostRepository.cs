@@ -1,5 +1,7 @@
 using JobBoard.Data;
 using JobBoard.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 
 namespace JobBoard.Repository {
 
@@ -16,12 +18,18 @@ namespace JobBoard.Repository {
             return _dataContext.SaveChanges();
         }
 
-        public void DeleteJobPost(int postId) {
-            throw new NotImplementedException();
+        public bool DeleteJobPost(int postId) {
+            JobPost jobPost = _dataContext.JobPosts.FirstOrDefault(post => post.PostId == postId)!;
+            if(jobPost == null) {
+                throw new  KeyNotFoundException("The job post was not found");
+            }
+            _dataContext.JobPosts.Remove(jobPost);
+            return _dataContext.SaveChanges() > 0;
         }
 
-        public void UpdateJobPost(JobPost jobPost) {
-            throw new NotImplementedException();
+        public bool UpdateJobPost(JobPost jobPost) {
+            _dataContext.JobPosts.Update(jobPost);
+            return _dataContext.SaveChanges() > 0;
         }
 
         public JobPost GetJobPost(int postId) {
