@@ -1,7 +1,10 @@
+using AutoMapper;
+using Dapper;
 using JobBoard.Dtos;
 using JobBoard.Models;
 using JobBoard.Repository;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace JobBoard.contollers
 {
@@ -20,16 +23,12 @@ namespace JobBoard.contollers
         [HttpPost("Register")]
         public IActionResult Register(RegisterDTO registerDTO)
         {
-            if (registerDTO.ConfirmPassword != registerDTO.Password)
+            User user = _authRepository.Register(registerDTO);
+            if (user == null)
             {
-                User userIsExist = _authRepository.UserExists(registerDTO.Email);
-                if (userIsExist != null)
-                {
-
-                }
-                throw new Exception("User already exists");
+                return BadRequest("User could not be added");
             }
-            throw new Exception("Passwords do not match");
+            return Ok();
         }
 
         [HttpPost("Login")]

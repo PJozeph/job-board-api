@@ -12,6 +12,7 @@ namespace JobBoard.Data
         }
 
         public DbSet<JobPost> JobPosts { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
