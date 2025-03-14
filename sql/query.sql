@@ -6,6 +6,8 @@ CREATE TABLE JobBoardSchema.jb_user
     , Email NVARCHAR(50)
     , Gender NVARCHAR(50)
     , Active BIT
+    , PasswordHash VARBINARY(MAX)
+	, PasswordSalt VARBINARY(MAX)
 );
 
 CREATE TABLE JobBoardSchema.job_post (

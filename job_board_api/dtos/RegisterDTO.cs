@@ -6,6 +6,8 @@ namespace JobBoard.Dtos
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Gender { get; set; }
+        public string Password { get; set; }
+        public string ConfirmPassword { get; set; }
 
         public RegisterDTO()
         {
@@ -20,6 +22,18 @@ namespace JobBoard.Dtos
             if (Email == null)
             {
                 Email = "";
+            }
+            if(Gender == null)
+            {
+                Gender = "";
+            }
+            if (Password == null)
+            {
+                Password = "";
+            }
+            if (ConfirmPassword == null)
+            {
+                ConfirmPassword = "";
             }
         }
 

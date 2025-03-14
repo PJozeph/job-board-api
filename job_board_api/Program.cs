@@ -16,6 +16,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IJobPostRepository, JobBoardRepository>();
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 
 
 

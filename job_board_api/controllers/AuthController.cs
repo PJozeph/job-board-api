@@ -1,4 +1,6 @@
 using JobBoard.Dtos;
+using JobBoard.Models;
+using JobBoard.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JobBoard.contollers
@@ -8,15 +10,26 @@ namespace JobBoard.contollers
     [Route("[controller]")]
     public class AuthController : ControllerBase
     {
+        private readonly IAuthRepository _authRepository;
 
-        public AuthController()
+        public AuthController(IAuthRepository authRepository)
         {
+            _authRepository = authRepository;
         }
 
         [HttpPost("Register")]
         public IActionResult Register(RegisterDTO registerDTO)
         {
-            throw new NotImplementedException();
+            if (registerDTO.ConfirmPassword != registerDTO.Password)
+            {
+                User userIsExist = _authRepository.UserExists(registerDTO.Email);
+                if (userIsExist != null)
+                {
+
+                }
+                throw new Exception("User already exists");
+            }
+            throw new Exception("Passwords do not match");
         }
 
         [HttpPost("Login")]
