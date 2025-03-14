@@ -17,7 +17,7 @@ namespace JobBoard.Data
         {
             modelBuilder.HasDefaultSchema("JobBoardSchema");
 
-            modelBuilder.Entity<JobPost>().ToTable("JobPost").HasKey(post => post.PostId);
+            modelBuilder.Entity<JobPost>().ToTable("job_post").HasKey(post => post.Id);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder configurationBuilder)

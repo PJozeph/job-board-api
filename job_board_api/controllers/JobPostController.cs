@@ -41,7 +41,7 @@ namespace JobBoard.contollers
             JobPost post = new JobPost();
             post.UserId = addJobPostDTO.UserId;
             post.Title = addJobPostDTO.Title;
-            post.Description = addJobPostDTO.Description;
+            post.JobDescription = addJobPostDTO.Description;
 
             int result = jobPostRepository.AddJobPost(post);
             if (result == 0)
@@ -60,7 +60,7 @@ namespace JobBoard.contollers
                 return NotFound("The job post was not found");
             }
             post.Title = editJobPostDTO.Title;
-            post.Description = editJobPostDTO.Description;
+            post.JobDescription = editJobPostDTO.Description;
             if (jobPostRepository.UpdateJobPost(post))
             {
                 return Ok();
