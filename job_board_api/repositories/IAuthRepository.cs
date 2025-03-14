@@ -6,7 +6,7 @@ namespace JobBoard.Repository {
     public interface IAuthRepository
     {
         User Register(RegisterDTO registerDTO);
-        User Login(string email, string password);
+        User Login(LoginDTO loginDTO);
 
         User UserExists(string email);
     }

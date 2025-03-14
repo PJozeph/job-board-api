@@ -25,9 +25,21 @@ namespace JobBoard.Repository
             _authUtils = new AuthUtils(config);
         }
 
-        public User Login(string email, string password)
+        public User Login(LoginDTO loginDTO)
         {
-            throw new NotImplementedException();
+            User user = _dataContext.Users.FirstOrDefault(user => user.Email == loginDTO.Email)!;
+            if (user != null)
+            {
+                byte[] passwordHash = _authUtils.GetPasswordHash(loginDTO.Password, user.PasswordSalt);
+
+                if (passwordHash.SequenceEqual(user.PasswordHash))
+                {
+                    return user;
+                }
+                throw new Exception("Password is incorrect");
+            }
+            throw new Exception("User does not exist");
+            
         }
 
         public User Register(RegisterDTO registerDTO)

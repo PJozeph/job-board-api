@@ -1,5 +1,3 @@
-using AutoMapper;
-using Dapper;
 using JobBoard.Dtos;
 using JobBoard.Models;
 using JobBoard.Repository;
@@ -34,7 +32,12 @@ namespace JobBoard.contollers
         [HttpPost("Login")]
         public IActionResult Login(LoginDTO loginDTO)
         {
-            throw new NotImplementedException();
+            User user = _authRepository.Login(loginDTO);
+            if (user == null)
+            {
+                return BadRequest("User could not be found");
+            }
+            return Ok();
         }
     }
 }
