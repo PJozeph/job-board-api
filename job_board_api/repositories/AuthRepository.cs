@@ -12,20 +12,17 @@ namespace JobBoard.Repository
         private readonly DataContextEntityFramework _dataContext;
 
         private readonly IMapper _registerMapper;
-        private readonly IMapper _loginMapper;
         private readonly AuthUtils _authUtils;
 
         public AuthRepository(IConfiguration config)
         {
             _registerMapper = new MapperConfiguration(
                 cfg => cfg.CreateMap<RegisterDTO, User>()).CreateMapper();
-            _loginMapper = new MapperConfiguration(
-                cfg => cfg.CreateMap<LoginDTO, User>()).CreateMapper();
             _dataContext = new DataContextEntityFramework(config);
             _authUtils = new AuthUtils(config);
         }
 
-        public User Login(LoginDTO loginDTO)
+        public string Login(LoginDTO loginDTO)
         {
             User user = _dataContext.Users.FirstOrDefault(user => user.Email == loginDTO.Email)!;
             if (user != null)
@@ -34,7 +31,7 @@ namespace JobBoard.Repository
 
                 if (passwordHash.SequenceEqual(user.PasswordHash))
                 {
-                    return user;
+                    return _authUtils.CreateToken(user.UserId);
                 }
                 throw new Exception("Password is incorrect");
             }

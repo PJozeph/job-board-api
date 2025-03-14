@@ -3,7 +3,6 @@ using JobBoard.Models;
 using JobBoard.Repository;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace JobBoard.contollers
 {
 
@@ -32,12 +31,13 @@ namespace JobBoard.contollers
         [HttpPost("Login")]
         public IActionResult Login(LoginDTO loginDTO)
         {
-            User user = _authRepository.Login(loginDTO);
-            if (user == null)
-            {
-                return BadRequest("User could not be found");
-            }
-            return Ok();
+            string token = _authRepository.Login(loginDTO);
+            return Ok(
+                new Dictionary<string, string>
+                {
+                    {"token", token}
+                }
+            );
         }
     }
 }
