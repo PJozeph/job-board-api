@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace JobBoard.Models
 {
     public class User
@@ -8,7 +10,9 @@ namespace JobBoard.Models
         public string Email { get; set; }
         public string Gender { get; set; }
         public bool Active { get; set; }
+        [JsonIgnore]
         public byte[] PasswordHash { get; set; }
+        [JsonIgnore]
         public byte[] PasswordSalt { get; set; }
 
         public User()

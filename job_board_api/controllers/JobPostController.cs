@@ -12,7 +12,6 @@ namespace JobBoard.contollers
     [Route("[controller]")]
     public class JobPostController : ControllerBase
     {
-
         public readonly IJobPostRepository jobPostRepository;
 
         public JobPostController(IJobPostRepository jobPostRepository)
@@ -33,10 +32,6 @@ namespace JobBoard.contollers
         public IActionResult GetSingleJobPost(int id)
         {
             JobPost jobPost = jobPostRepository.GetJobPost(id);
-            if (jobPost == null)
-            {
-                return NotFound("The job post was not found");
-            }
             return Ok(jobPost);
         }
 
@@ -67,7 +62,8 @@ namespace JobBoard.contollers
         [HttpDelete("Delete/{id}")]
         public IActionResult Delete(int id)
         {
-            return jobPostRepository.DeleteJobPost(id) ? Ok() : BadRequest();
+            string userId = User.FindFirst("userId")?.Value + "";
+            return jobPostRepository.DeleteJobPost(id,int.Parse(userId)) ? Ok() : BadRequest();
         }
 
     }

@@ -8,6 +8,7 @@ CREATE TABLE JobBoardSchema.jb_user
     , Active BIT
     , PasswordHash VARBINARY(MAX)
 	, PasswordSalt VARBINARY(MAX)
+    , CreatedTime DATETIME NOT NULL DEFAULT GETDATE()
 );
 
 CREATE TABLE JobBoardSchema.job_post (

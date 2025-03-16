@@ -1,6 +1,7 @@
 using AutoMapper;
 using JobBoard.Data;
 using JobBoard.Dtos;
+using JobBoard.exceptions;
 using JobBoard.Models;
 
 namespace JobBoard.Repository
@@ -29,14 +30,15 @@ namespace JobBoard.Repository
             return _dataContext.SaveChanges();
         }
 
-        public bool DeleteJobPost(int postId)
+        public bool DeleteJobPost(int postId, int userId)
         {
-            JobPost jobPost = _dataContext.JobPosts.FirstOrDefault(post => post.Id == postId)!;
-            if (jobPost == null)
+               JobPost postForDelete = _dataContext.JobPosts.FirstOrDefault(post => post.Id == postId && post.UserId == userId)!;
+            if (postForDelete == null)
             {
-                throw new KeyNotFoundException("The job post was not found");
+                throw new NotFoundException("The job post was not found");
             }
-            _dataContext.JobPosts.Remove(jobPost);
+
+            _dataContext.JobPosts.Remove(postForDelete);
             return _dataContext.SaveChanges() > 0;
         }
 
@@ -45,7 +47,7 @@ namespace JobBoard.Repository
             JobPost post = _dataContext.JobPosts.FirstOrDefault(post => post.Id == editJobPostDTO.PostId && post.UserId == userId)!;
             if (post == null)
             {
-                throw new KeyNotFoundException("The job post was not found");
+                throw new NotFoundException("The job post was not found");
             }
 
             post.Title = editJobPostDTO.Title;
