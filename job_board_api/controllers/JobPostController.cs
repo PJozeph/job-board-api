@@ -1,11 +1,13 @@
 using JobBoard.Dtos;
 using JobBoard.Models;
 using JobBoard.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JobBoard.contollers
 {
 
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class JobPostController : ControllerBase
@@ -19,9 +21,12 @@ namespace JobBoard.contollers
         }
 
         [HttpGet("GetAll")]
+        [Authorize]
+
         public IEnumerable<JobPost> Get()
         {
-            return jobPostRepository.GetJobPosts();
+            string userId = User.FindFirst("userId")?.Value + "";
+            return jobPostRepository.GetJobPostsByUserId(int.Parse(userId));
         }
 
         [HttpGet("GetSingle/{id}")]
@@ -38,17 +43,12 @@ namespace JobBoard.contollers
         [HttpPost("Add")]
         public IActionResult Save(AddJobPostDTO addJobPostDTO)
         {
-            JobPost post = new JobPost();
-            post.UserId = addJobPostDTO.UserId;
-            post.Title = addJobPostDTO.Title;
-            post.JobDescription = addJobPostDTO.Description;
-
-            int result = jobPostRepository.AddJobPost(post);
-            if (result == 0)
+            string userId = User.FindFirst("userId")?.Value + "";
+            if (jobPostRepository.AddJobPost(addJobPostDTO, int.Parse(userId)) == 0)
             {
                 return BadRequest("The job post was not added");
             }
-            return Ok();
+            return Ok("The job post created");
         }
 
         [HttpPut("Update")]
@@ -60,7 +60,7 @@ namespace JobBoard.contollers
                 return NotFound("The job post was not found");
             }
             post.Title = editJobPostDTO.Title;
-            post.JobDescription = editJobPostDTO.Description;
+            post.Description = editJobPostDTO.Description;
             if (jobPostRepository.UpdateJobPost(post))
             {
                 return Ok();

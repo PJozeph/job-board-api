@@ -17,7 +17,7 @@ namespace JobBoard.contollers
             _authRepository = authRepository;
         }
 
-        [HttpPost("Register")]
+        [HttpPost("SignUp")]
         public IActionResult Register(RegisterDTO registerDTO)
         {
             User user = _authRepository.Register(registerDTO);
@@ -28,7 +28,7 @@ namespace JobBoard.contollers
             return Ok();
         }
 
-        [HttpPost("Login")]
+        [HttpPost("SignIn")]
         public IActionResult Login(LoginDTO loginDTO)
         {
             string token = _authRepository.Login(loginDTO);
