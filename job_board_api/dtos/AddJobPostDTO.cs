@@ -1,12 +1,11 @@
 namespace JobBoard.Dtos
 {
-    public class EditJobPostDTO
+    public class AddJobPostDTO
     {
-        public int PostId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
 
-        public EditJobPostDTO()
+        public AddJobPostDTO()
         {
             if (Title == null)
             {

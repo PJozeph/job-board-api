@@ -44,6 +44,7 @@ namespace JobBoard.contollers
         public IActionResult Save(AddJobPostDTO addJobPostDTO)
         {
             string userId = User.FindFirst("userId")?.Value + "";
+
             if (jobPostRepository.AddJobPost(addJobPostDTO, int.Parse(userId)) == 0)
             {
                 return BadRequest("The job post was not added");
@@ -54,14 +55,9 @@ namespace JobBoard.contollers
         [HttpPut("Update")]
         public IActionResult Update(EditJobPostDTO editJobPostDTO)
         {
-            JobPost post = jobPostRepository.GetJobPost(editJobPostDTO.PostId);
-            if (post == null)
-            {
-                return NotFound("The job post was not found");
-            }
-            post.Title = editJobPostDTO.Title;
-            post.Description = editJobPostDTO.Description;
-            if (jobPostRepository.UpdateJobPost(post))
+            string userId = User.FindFirst("userId")?.Value + "";
+
+            if (jobPostRepository.UpdateJobPost(editJobPostDTO, int.Parse(userId)))
             {
                 return Ok();
             }

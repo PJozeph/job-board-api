@@ -25,6 +25,7 @@ namespace JobBoard.Models
             {
                 Email = "";
             }
+
             if (PasswordHash == null)
             {
                 PasswordHash = new byte[0];
@@ -32,6 +33,10 @@ namespace JobBoard.Models
             if (PasswordSalt == null)
             {
                 PasswordSalt = new byte[0];
+            }
+            if (Gender == null)
+            {
+                Gender = "";
             }
         }
     }

@@ -40,9 +40,17 @@ namespace JobBoard.Repository
             return _dataContext.SaveChanges() > 0;
         }
 
-        public bool UpdateJobPost(JobPost jobPost)
+        public bool UpdateJobPost(EditJobPostDTO editJobPostDTO, int userId)
         {
-            _dataContext.JobPosts.Update(jobPost);
+            JobPost post = _dataContext.JobPosts.FirstOrDefault(post => post.Id == editJobPostDTO.PostId && post.UserId == userId)!;
+            if (post == null)
+            {
+                throw new KeyNotFoundException("The job post was not found");
+            }
+
+            post.Title = editJobPostDTO.Title;
+            post.Description = editJobPostDTO.Description;
+            _dataContext.JobPosts.Update(post);
             return _dataContext.SaveChanges() > 0;
         }
 

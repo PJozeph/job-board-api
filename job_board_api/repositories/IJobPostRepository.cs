@@ -8,7 +8,7 @@ namespace JobBoard.Repository
     {
         int AddJobPost(AddJobPostDTO jobPost, int userId);
         bool DeleteJobPost(int postId);
-        bool UpdateJobPost(JobPost jobPost);
+        bool UpdateJobPost(EditJobPostDTO jobPost, int userId);
         JobPost GetJobPost(int postId);
         IEnumerable<JobPost> GetJobPosts();
 
