@@ -9,27 +9,20 @@ namespace JobBoard.contollers
     [Route("[controller]")]
     public class JobSearchController : ControllerBase
     {
-        public readonly IJobPostRepository jobPostRepository;
+        public readonly IJobSearchRepository _jobSearchRepository;
 
-        public JobSearchController(IJobPostRepository jobPostRepository)
+        public JobSearchController(IJobSearchRepository jobSearchRepository)
         {
-            this.jobPostRepository = jobPostRepository;
+            _jobSearchRepository = jobSearchRepository;
         }
 
-        [HttpGet("GetAll")]
+        [HttpGet("Search")]
 
-        public IActionResult search()
+        public PagedResponse<List<JobPost>> Search([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
-            var jobSearch = jobPostRepository.GetJobPosts();
-            return Ok(new Response<IEnumerable<JobPost>>(jobSearch));
+            return _jobSearchRepository.GetJobs(new PaginationFilter(pageNumber, pageSize));
         }
 
-        [HttpGet("GetSingle/{id}")]
-        public IActionResult GetSingleJobPost(int id)
-        {
-            JobPost jobPost = jobPostRepository.GetJobPost(id);
-            return Ok(jobPost);
-        }
 
     }
 
