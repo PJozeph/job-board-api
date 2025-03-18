@@ -26,6 +26,7 @@ namespace JobBoard.Repository
         {
             JobPost addJobPost = _addJobPostMapper.Map<JobPost>(jobPost);
             addJobPost.UserId = userId;
+            addJobPost.CreatedTime = DateTime.Now;
             _dataContext.JobPosts.Add(addJobPost);
             return _dataContext.SaveChanges();
         }

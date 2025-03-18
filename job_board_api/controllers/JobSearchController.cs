@@ -18,9 +18,9 @@ namespace JobBoard.contollers
 
         [HttpGet("Search")]
 
-        public PagedResponse<List<JobPost>> Search([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        public PagedResponse<List<JobPost>> Search([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10, [FromQuery] string? searchQuery = null)
         {
-            return _jobSearchRepository.GetJobs(new PaginationFilter(pageNumber, pageSize));
+            return _jobSearchRepository.GetJobs(new PaginationFilter(pageNumber, pageSize), searchQuery);
         }
 
 
